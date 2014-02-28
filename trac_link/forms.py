@@ -19,7 +19,7 @@ limitations under the License.
 """
 
 from django import forms
-from djiblets.extensions.forms import SettingsForm
+from djblets.extensions.forms import SettingsForm
 
 class TracLinkSettingsForm(SettingsForm):
     tracsite = forms.CharField(

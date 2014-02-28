@@ -24,6 +24,7 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.conf.urls.defaults import patterns, include
 from reviewboard.extensions.base import Extension
+from reviewboard.extensions.hooks import SignalHook
 from reviewboard.reviews.signals import review_request_published
 from trac import ticket, env, resource
 
@@ -46,15 +47,15 @@ class TracLink(Extension):
 
         # Information about the review
         review_id = review_request.display_id
-        tickets = review_request.get_bug_list()
+        ticket_ids = review_request.get_bug_list()
 
         # Connect to trac
         tracenv = env.open_environment(self.settings['tracsite'])
 
         # Add the review to each trac ticket
-        for ticket in tickets:
+        for ticket_id in ticket_ids:
             try:
-                tracticket = ticket.Ticket(tracenv,tkt_id=ticket)
+                tracticket = ticket.Ticket(tracenv,tkt_id=ticket_id)
                 addTracLink(tracticket, 
                         review_request.display_id,
                         review_request.submitter)
@@ -65,7 +66,7 @@ class TracLink(Extension):
         # Cleanup
         tracenv.shutdown()
 
-def addTracLink(tracticket, reviewid, submitter):
+def addTracLink(tracticket, review_id, submitter):
     "Add a link to the review to a Trac ticket"
 
     # Get the ticket's review list
@@ -85,6 +86,6 @@ def addTracLink(tracticket, reviewid, submitter):
 
     # Add a comment and save the change
     tracticket['reviews'] = u', '.join(reviewlist)
-    reviewcomment = u"%s created review request review:%s\n"%(submitter,reviewid)
+    reviewcomment = u"%s created review request review:%s\n"%(submitter,review_id)
     tracticket.save_changes(author=u'Reviewboard',comment=reviewcomment)
 
