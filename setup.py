@@ -11,10 +11,10 @@ setup(
     version=VERSION,
     description="Link review requests with Trac tickets",
     author="Scott Wales",
-    packages=["trac_link"],
+    packages=[str("trac_link")],
     entry_points={
         'reviewboard.extensions':
             '%s = trac_link.extension:TracLink' % PACKAGE,
     },
-    install_requires=['Trac>=1.0','Django<1.6'],
+    install_requires=['Trac>=1.0','Django<1.6','Djblets','pycrypto','Genshi'],
 )
