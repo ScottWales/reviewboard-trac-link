@@ -16,5 +16,5 @@ setup(
         'reviewboard.extensions':
             '%s = trac_link.extension:TracLink' % PACKAGE,
     },
-    install_requires=['Trac>=1.0','Django<1.6','ReviewBoard','Genshi'],
+    install_requires=['Trac>=1.0','Django','ReviewBoard','Genshi'],
 )
