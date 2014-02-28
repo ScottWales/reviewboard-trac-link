@@ -50,7 +50,11 @@ class TracLink(Extension):
         ticket_ids = review_request.get_bug_list()
 
         # Connect to trac
-        tracenv = env.open_environment(self.settings['tracsite'])
+        try:
+            tracenv = env.open_environment(self.settings['tracsite'])
+        except core.TracError:
+            logging.error('Unable to open Trac site')
+            return
 
         # Add the review to each trac ticket
         for ticket_id in ticket_ids:
