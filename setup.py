@@ -3,18 +3,18 @@ from __future__ import unicode_literals
 from reviewboard.extensions.packaging import setup
 
 
-PACKAGE = "trac_link"
-VERSION = "0.1"
+PACKAGE = "traclink"
+VERSION = "0.2"
 
 setup(
     name=PACKAGE,
     version=VERSION,
     description="Link review requests with Trac tickets",
     author="Scott Wales",
-    packages=[str("trac_link")],
+    packages=[str("traclink")],
     entry_points={
         'reviewboard.extensions':
-            '%s = trac_link.extension:TracLink' % PACKAGE,
+            '%s = traclink.extension:TracLink' % PACKAGE,
     },
     install_requires=['Trac>=1.0','Django','ReviewBoard','Genshi'],
 )
